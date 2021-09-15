@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../assets/constants.dart' as Constants;
 
-class Login extends StatelessWidget {
-  const Login({Key? key, this.title = "ABEXA APP"}) : super(key: key);
+class Register extends StatelessWidget {
+  const Register({Key? key, this.title = "ABEXA APP"}) : super(key: key);
 
   final String title;
 

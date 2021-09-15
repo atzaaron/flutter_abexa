@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_abexa/auth/auth.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_abexa/auth/login.dart';
+import 'package:flutter_abexa/auth/register.dart';
+import '../assets/constants.dart' as Constants;
 
 void main() {
-  runApp(const MyApp());
-}
+  WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  runApp(MaterialApp(
+      title: 'ABEXA APP',
+      initialRoute: '/auth',
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (context) => const MyHomePage(),
+        '/auth': (context) =>
+            Auth(title: "S'authentifier - " + Constants.appName),
+        '/register': (context) =>
+            const Register(title: "S'enregistrer -" + Constants.appName),
+        '/login': (context) =>
+            const Login(title: "Se connecter - " + Constants.appName),
+      }));
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -34,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text("Hi"),
       ),
       body: Center(
         child: Column(
