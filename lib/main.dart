@@ -14,11 +14,11 @@ void main() {
       initialRoute: '/auth',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const MyHomePage(),
+        '/home': (context) => const MyHomePage(),
         '/auth': (context) =>
             Auth(title: "S'authentifier - " + Constants.appName),
         '/register': (context) =>
-            const Register(title: "S'enregistrer -" + Constants.appName),
+            const Register(title: "S'enregistrer - " + Constants.appName),
         '/login': (context) =>
             const Login(title: "Se connecter - " + Constants.appName),
       }));
