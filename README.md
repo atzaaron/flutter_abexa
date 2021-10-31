@@ -2,6 +2,14 @@
 
 A new Flutter project.
 
+In order to start the project locally, follow these instructions :
+
+- Follow the repository
+- Setup a device
+- flutter run
+
+Test user : test@test.com - articho
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
