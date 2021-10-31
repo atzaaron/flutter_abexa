@@ -1,6 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import '../assets/constants.dart';
+import 'package:flutter_abexa/services/auth_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import '../assets/constants.dart' as Constants;
 
 class Register extends StatefulWidget {
   const Register({Key? key, this.title = "ABEXA APP"}) : super(key: key);
@@ -12,8 +15,18 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  bool _passwordVisible = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+  bool _passwordVisible = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -21,10 +34,19 @@ class _RegisterState extends State<Register> {
     super.initState();
   }
 
-  _manageRegister(BuildContext context) {
+  _manageRegister(BuildContext context) async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Login process, validators are ok")));
+      try {
+        await authService.createUserWithEmailAndPassword(
+            emailController.text, passwordController.text);
+        Navigator.pop(context);
+      } catch (e) {
+        Fluttertoast.showToast(msg: "Register unsuccessful");
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Seems like validators are not ok")));
@@ -39,7 +61,7 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         title: Center(child: Text(widget.title)),
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(mainColor),
+        backgroundColor: const Color(Constants.mainColor),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -47,8 +69,8 @@ class _RegisterState extends State<Register> {
               begin: Alignment.topLeft,
               end: Alignment.bottomLeft,
               colors: [
-                Color(mainColor),
-                Color(gradientBottomRightColor)
+                Color(Constants.mainColor),
+                Color(Constants.gradientBottomRightColor)
               ]),
         ),
         child: Container(
@@ -74,100 +96,104 @@ class _RegisterState extends State<Register> {
                             onPressed: () =>
                                 {Navigator.popAndPushNamed(context, "/auth")},
                             icon: const Icon(Icons.arrow_back,
-                                color: Color(mainColor), size: 40),
+                                color: Color(Constants.mainColor), size: 40),
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          const SizedBox(height: 35),
-                          SizedBox(
-                            width: 300,
-                            child: Form(
-                              key: _formKey,
-                              autovalidateMode: AutovalidateMode.always,
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    validator: (email) => EmailValidator
-                                            .validate(email ?? "")
-                                        ? null
-                                        : "Veuillez rentrer un email valide.",
-                                    decoration: const InputDecoration(
-                                      hintText: "Adresse email",
-                                      prefixIcon: Icon(
-                                        Icons.email_outlined,
-                                        color: Colors.grey,
-                                        size: 30,
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 35),
+                            SizedBox(
+                              width: 300,
+                              child: Form(
+                                key: _formKey,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      controller: emailController,
+                                      validator: (email) => EmailValidator
+                                              .validate(email ?? "")
+                                          ? null
+                                          : "Veuillez rentrer un email valide.",
+                                      decoration: const InputDecoration(
+                                        hintText: "Adresse email",
+                                        prefixIcon: Icon(
+                                          Icons.email_outlined,
+                                          color: Colors.grey,
+                                          size: 30,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  TextFormField(
-                                    // validator: ,
-                                    obscureText: _passwordVisible,
-                                    decoration: InputDecoration(
-                                      hintText: "Mot de passe",
-                                      prefixIcon: const Icon(
-                                        Icons.password,
-                                        color: Colors.grey,
-                                        size: 30,
-                                      ),
-                                      suffixIcon: IconButton(
-                                        icon: Icon(_passwordVisible
-                                            ? Icons.visibility_off
-                                            : Icons.visibility),
-                                        onPressed: (() {
-                                          setState(() {
-                                            _passwordVisible =
-                                                !_passwordVisible;
-                                          });
-                                        }),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  TextFormField(
-                                    obscureText: _passwordVisible,
-                                    decoration: InputDecoration(
-                                      hintText: "Confirmer mot de passe",
-                                      prefixIcon: const Icon(
-                                        Icons.lock_outline_rounded,
-                                        color: Colors.grey,
-                                        size: 30,
-                                      ),
-                                      suffixIcon: IconButton(
-                                        icon: Icon(_passwordVisible
-                                            ? Icons.visibility_off
-                                            : Icons.visibility),
-                                        onPressed: (() {
-                                          setState(() {
-                                            _passwordVisible =
-                                                !_passwordVisible;
-                                          });
-                                        }),
+                                    const SizedBox(height: 15),
+                                    TextFormField(
+                                      controller: passwordController,
+                                      // validator: ,
+                                      obscureText: _passwordVisible,
+                                      decoration: InputDecoration(
+                                        hintText: "Mot de passe",
+                                        prefixIcon: const Icon(
+                                          Icons.password,
+                                          color: Colors.grey,
+                                          size: 30,
+                                        ),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(_passwordVisible
+                                              ? Icons.visibility_off
+                                              : Icons.visibility),
+                                          onPressed: (() {
+                                            setState(() {
+                                              _passwordVisible =
+                                                  !_passwordVisible;
+                                            });
+                                          }),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 30),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary:
-                                          const Color(buttonColor),
-                                      padding: const EdgeInsets.only(
-                                          top: 20,
-                                          bottom: 20,
-                                          left: 55,
-                                          right: 55),
+                                    const SizedBox(height: 15),
+                                    TextFormField(
+                                      obscureText: _passwordVisible,
+                                      decoration: InputDecoration(
+                                        hintText: "Confirmer mot de passe",
+                                        prefixIcon: const Icon(
+                                          Icons.lock_outline_rounded,
+                                          color: Colors.grey,
+                                          size: 30,
+                                        ),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(_passwordVisible
+                                              ? Icons.visibility_off
+                                              : Icons.visibility),
+                                          onPressed: (() {
+                                            setState(() {
+                                              _passwordVisible =
+                                                  !_passwordVisible;
+                                            });
+                                          }),
+                                        ),
+                                      ),
                                     ),
-                                    onPressed: () => _manageRegister(context),
-                                    child: const Text("S'enregistrer"),
-                                  ),
-                                ],
+                                    const SizedBox(height: 30),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary:
+                                            const Color(Constants.buttonColor),
+                                        padding: const EdgeInsets.only(
+                                            top: 20,
+                                            bottom: 20,
+                                            left: 55,
+                                            right: 55),
+                                      ),
+                                      onPressed: () => _manageRegister(context),
+                                      child: const Text("S'enregistrer"),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -176,7 +202,7 @@ class _RegisterState extends State<Register> {
                   alignment: Alignment.topCenter,
                   child: CircleAvatar(
                     radius: 60.0,
-                    backgroundColor: Color(mainColor),
+                    backgroundColor: Color(Constants.mainColor),
                     child: Image(
                       image: AssetImage('assets/images/profile.png'),
                       height: 100,

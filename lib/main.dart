@@ -7,25 +7,34 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_abexa/services/auth_service.dart';
+import 'package:flutter_abexa/wrapper.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
 enum MarkerType { housing, work }
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-  runApp(MaterialApp(
-      title: 'ABEXA APP',
-      initialRoute: '/home',
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/home': (context) => const MyHomePage(),
-        '/auth': (context) => const Auth(title: "S'authentifier - " + appName),
-        '/register': (context) =>
-            const Register(title: "S'enregistrer - " + appName),
-        '/login': (context) => const Login(title: "Se connecter - " + appName),
-      }));
+  runApp(MultiProvider(
+    providers: [Provider<AuthService>(create: (_) => AuthService())],
+    child: MaterialApp(
+        title: 'ABEXA APP',
+        initialRoute: '/auth',
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/home': (context) => const MyHomePage(),
+          '/auth': (context) => const Wrapper(),
+          '/register': (context) =>
+              const Register(title: "S'enregistrer - " + Constants.appName),
+          '/login': (context) =>
+              const Login(title: "Se connecter - " + Constants.appName),
+        }),
+  ));
 }
 
 class MyHomePage extends StatefulWidget {
