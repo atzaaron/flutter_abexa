@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../assets/constants.dart' as Constants;
+import '../assets/constants.dart';
 import 'package:email_validator/email_validator.dart';
 
 class Login extends StatefulWidget {
@@ -36,18 +36,26 @@ class _LoginState extends State<Login> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Center(child: Text(widget.title)),
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(Constants.mainColor),
-      ),
+          title: Center(child: Text(widget.title)),
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color(mainColor),
+          leading: Builder(builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          })),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomLeft,
               colors: [
-                Color(Constants.mainColor),
-                Color(Constants.gradientBottomRightColor)
+                Color(mainColor),
+                Color(gradientBottomRightColor)
               ]),
         ),
         child: SingleChildScrollView(
@@ -73,7 +81,7 @@ class _LoginState extends State<Login> {
                             onPressed: () =>
                                 {Navigator.popAndPushNamed(context, "/auth")},
                             icon: const Icon(Icons.arrow_back,
-                                color: Color(Constants.mainColor), size: 40),
+                                color: Color(mainColor), size: 40),
                           ),
                         ],
                       ),
@@ -129,7 +137,7 @@ class _LoginState extends State<Login> {
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       primary:
-                                          const Color(Constants.buttonColor),
+                                          const Color(buttonColor),
                                       padding: const EdgeInsets.only(
                                           top: 20,
                                           bottom: 20,
@@ -152,7 +160,7 @@ class _LoginState extends State<Login> {
                   alignment: Alignment.topCenter,
                   child: CircleAvatar(
                     radius: 60.0,
-                    backgroundColor: Color(Constants.mainColor),
+                    backgroundColor: Color(mainColor),
                     child: Image(
                       image: AssetImage('assets/images/profile.png'),
                       height: 100,
