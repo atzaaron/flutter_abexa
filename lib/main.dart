@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_abexa/auth/auth.dart';
 import 'package:flutter_abexa/auth/login.dart';
 import 'package:flutter_abexa/auth/register.dart';
 import '../assets/constants.dart';
@@ -30,9 +29,9 @@ void main() async {
           '/home': (context) => const MyHomePage(),
           '/auth': (context) => const Wrapper(),
           '/register': (context) =>
-              const Register(title: "S'enregistrer - " + Constants.appName),
+              const Register(title: "S'enregistrer - " + appName),
           '/login': (context) =>
-              const Login(title: "Se connecter - " + Constants.appName),
+              const Login(title: "Se connecter - " + appName),
         }),
   ));
 }
