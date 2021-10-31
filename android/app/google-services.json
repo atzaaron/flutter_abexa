@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "169123476012",
+    "project_id": "abexa-1c777",
+    "storage_bucket": "abexa-1c777.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169123476012:android:85619f3e46c29eaa231789",
+        "android_client_info": {
+          "package_name": "com.example.flutter_abexa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169123476012-bkmcct8vlfm4bjjm3sn6v8tqai4o5r76.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1k9p6TQpY10K3dAw4rg2pdNQx856naxM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169123476012-bkmcct8vlfm4bjjm3sn6v8tqai4o5r76.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
