@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import '../assets/constants.dart' as Constants;
+import '../assets/constants.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key, this.title = "ABEXA APP"}) : super(key: key);
@@ -33,14 +33,13 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Center(child: Text(widget.title)),
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(Constants.mainColor),
+        backgroundColor: const Color(mainColor),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -48,8 +47,8 @@ class _RegisterState extends State<Register> {
               begin: Alignment.topLeft,
               end: Alignment.bottomLeft,
               colors: [
-                Color(Constants.mainColor),
-                Color(Constants.gradientBottomRightColor)
+                Color(mainColor),
+                Color(gradientBottomRightColor)
               ]),
         ),
         child: Container(
@@ -75,7 +74,7 @@ class _RegisterState extends State<Register> {
                             onPressed: () =>
                                 {Navigator.popAndPushNamed(context, "/auth")},
                             icon: const Icon(Icons.arrow_back,
-                                color: Color(Constants.mainColor), size: 40),
+                                color: Color(mainColor), size: 40),
                           ),
                         ],
                       ),
@@ -154,7 +153,7 @@ class _RegisterState extends State<Register> {
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       primary:
-                                          const Color(Constants.buttonColor),
+                                          const Color(buttonColor),
                                       padding: const EdgeInsets.only(
                                           top: 20,
                                           bottom: 20,
@@ -177,7 +176,7 @@ class _RegisterState extends State<Register> {
                   alignment: Alignment.topCenter,
                   child: CircleAvatar(
                     radius: 60.0,
-                    backgroundColor: Color(Constants.mainColor),
+                    backgroundColor: Color(mainColor),
                     child: Image(
                       image: AssetImage('assets/images/profile.png'),
                       height: 100,

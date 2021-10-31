@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../assets/constants.dart' as Constants;
+import '../assets/constants.dart';
 
 class Auth extends StatelessWidget {
-  Auth({Key? key, this.title = "ABEXA APP"}) : super(key: key);
+  const Auth({Key? key, this.title = "ABEXA APP"}) : super(key: key);
 
   final String title;
 
@@ -12,7 +12,7 @@ class Auth extends StatelessWidget {
       appBar: AppBar(
         title: Center(child: Text(title)),
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(Constants.mainColor),
+        backgroundColor: const Color(mainColor),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -20,8 +20,8 @@ class Auth extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomLeft,
               colors: [
-                Color(Constants.mainColor),
-                Color(Constants.gradientBottomRightColor)
+                Color(mainColor),
+                Color(gradientBottomRightColor)
               ]),
         ),
         child: Container(
@@ -45,7 +45,7 @@ class Auth extends StatelessWidget {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: const Color(Constants.buttonColor),
+                            primary: const Color(buttonColor),
                             padding: const EdgeInsets.only(
                                 top: 20, bottom: 20, left: 55, right: 55),
                           ),
@@ -62,7 +62,7 @@ class Auth extends StatelessWidget {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: const Color(Constants.buttonColor),
+                            primary: const Color(buttonColor),
                             padding: const EdgeInsets.only(
                                 top: 20, bottom: 20, left: 55, right: 55),
                           ),
@@ -79,7 +79,7 @@ class Auth extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: CircleAvatar(
                   radius: 60.0,
-                  backgroundColor: Color(Constants.mainColor),
+                  backgroundColor: Color(mainColor),
                   child: Image(
                     image: AssetImage('assets/images/profile.png'),
                     height: 100,
